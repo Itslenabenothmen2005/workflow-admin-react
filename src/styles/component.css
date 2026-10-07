@@ -137,7 +137,7 @@
 .stat-pill { display: inline-flex; align-items: baseline; gap: 9px; padding: 9px 18px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--text-2); transition: 0.18s; }
 .stat-pill strong { font: 600 19px var(--font-display); color: var(--text); }
 .stat-pill:hover { border-color: var(--line-strong); }
-.stat-pill[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
+.stat-pill.active, .stat-pill[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
 
 /* Tableaux --------------------------------------------------------------- */
 .table-wrap { overflow-x: auto; }
@@ -156,6 +156,22 @@
 .pager-num { min-width: 32px; height: 32px; padding: 0 8px; border-radius: 9px; color: var(--text-2); font-weight: 500; }
 .pager-num:hover { background: var(--surface-3); }
 .pager-num.is-active { background: var(--accent-soft); color: var(--text); }
+.table-actions .actions { width: 1%; }
+.inline-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+.page-heading-inline { display: flex; align-items: center; }
+.section-title { margin: 0; font-size: 18px; }
+.compact-toolbar { padding-top: 0; padding-bottom: 0; }
+.reports-table th:nth-child(4) { min-width: 140px; }
+.report-view-button { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+.report-viewer-content { display: flex; flex-direction: column; gap: 18px; max-height: min(60vh, 560px); padding: 4px 0 10px; overflow-y: auto; }
+.report-detail-section { padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.report-detail-section h3 { margin-bottom: 8px; font-size: 15px; }
+.report-detail-section ul { display: flex; flex-direction: column; gap: 7px; margin: 0; padding-left: 20px; color: var(--text-2); }
+.report-empty-state { margin: 0; color: var(--text-2); }
+.report-document-state { display: flex; align-items: flex-start; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); color: var(--text-2); }
+.report-document-state > svg { flex: none; color: var(--accent-2); }
+.report-document-state strong { display: block; color: var(--text); }
+.report-document-state p { margin: 4px 0 0; }
 
 .empty { display: grid; place-items: center; gap: 10px; padding: 56px 20px; text-align: center; color: var(--text-2); }
 .empty .empty-ico { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 16px; background: var(--surface-3); color: var(--text-3); }
@@ -257,6 +273,144 @@ a.list-item:hover { background: var(--surface-2); }
 .hbar-top strong { color: var(--text); font-weight: 600; }
 .stack-bar { display: flex; height: 12px; border-radius: 99px; overflow: hidden; gap: 3px; }
 .stack-bar i { display: block; height: 100%; background: var(--c); border-radius: 3px; min-width: 4px; }
+
+/* Chef workspace refinements ---------------------------------------------- */
+.calendar-shell { display: flex; flex-direction: column; gap: 10px; }
+.calendar-shell-month { overflow-x: auto; }
+.calendar-shell-meetings { overflow-x: auto; }
+.calendar-month-toolbar { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.calendar-month-toolbar h3 { min-width: 170px; margin: 0; text-align: center; font-size: 16px; text-transform: capitalize; }
+.calendar-month-toolbar .btn { display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; }
+.calendar-header-row { display: grid; grid-template-columns: 72px repeat(5, minmax(150px, 1fr)); gap: 8px; }
+.calendar-header-month { grid-template-columns: repeat(7, minmax(0, 1fr)); min-width: 700px; gap: 10px; }
+.calendar-period-toolbar { display: flex; align-items: center; justify-content: center; gap: 12px; min-width: 1100px; }
+.calendar-period-toolbar h3 { min-width: 300px; margin: 0; text-align: center; font-size: 16px; }
+.calendar-period-toolbar .btn { display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; }
+.calendar-header-meetings { grid-template-columns: 72px repeat(7, minmax(130px, 1fr)); min-width: 1100px; }
+.calendar-grid-meetings .calendar-row { grid-template-columns: 72px repeat(7, minmax(130px, 1fr)); min-width: 1100px; }
+.calendar-weekend-label { background: color-mix(in srgb, var(--surface-3) 62%, var(--surface-2)); }
+.calendar-day-label, .calendar-time-header { display: flex; align-items: center; justify-content: center; height: 36px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); font-size: 12.5px; color: var(--text-2); font-weight: 600; }
+.calendar-grid-week { display: flex; flex-direction: column; gap: 8px; }
+.calendar-row { display: grid; grid-template-columns: 72px repeat(5, minmax(150px, 1fr)); gap: 8px; }
+.calendar-hour-label { display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); color: var(--text-3); font-size: 12px; }
+.calendar-slot { position: relative; display: flex; align-items: stretch; justify-content: center; min-height: 74px; padding: 8px; border: 1px dashed var(--line-strong); border-radius: 12px; background: color-mix(in srgb, var(--surface-2) 82%, transparent); cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+.calendar-weekend-slot { background: color-mix(in srgb, var(--surface-3) 42%, var(--surface-2)); }
+.calendar-slot:hover { border-color: var(--accent); background: var(--surface-2); }
+.calendar-add { display: inline-grid; place-items: center; width: 28px; height: 28px; margin: auto; border-radius: 50%; background: var(--accent-soft); color: var(--accent-2); }
+.calendar-event { display: flex; flex-direction: column; gap: 2px; width: 100%; padding: 8px 10px; border-radius: 10px; background: linear-gradient(135deg, var(--accent-soft), color-mix(in srgb, var(--accent) 16%, transparent)); border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent); color: var(--text); font: inherit; text-align: left; cursor: pointer; overflow-wrap: anywhere; }
+.calendar-event strong { font-size: 12px; line-height: 1.25; }
+.calendar-event span { color: var(--text-2); font-size: 11.5px; }
+.calendar-grid-month { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); min-width: 700px; gap: 10px; }
+.calendar-date-cell { min-height: 110px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.calendar-date-empty { background: transparent; border-color: transparent; }
+.calendar-weekend { background: color-mix(in srgb, var(--surface-3) 62%, var(--surface-2)); }
+.calendar-date-head { display: flex; align-items: center; justify-content: flex-end; font-size: 12.5px; color: var(--text-3); }
+.calendar-date-events { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.leave-chip { display: flex; flex-direction: column; gap: 2px; min-width: 0; border-radius: 10px; padding: 6px 8px; border: 1px solid transparent; font-size: 11px; overflow-wrap: anywhere; }
+.leave-chip strong { font-size: 11px; }
+.leave-chip.valid { background: color-mix(in srgb, var(--ok) 14%, transparent); border-color: color-mix(in srgb, var(--ok) 32%, transparent); color: var(--ok); }
+.leave-chip.refused { background: color-mix(in srgb, var(--danger) 14%, transparent); border-color: color-mix(in srgb, var(--danger) 32%, transparent); color: var(--danger); }
+.leave-chip.pending { background: color-mix(in srgb, var(--warn) 14%, transparent); border-color: color-mix(in srgb, var(--warn) 32%, transparent); color: var(--warn); }
+
+/* Employee workspace ----------------------------------------------------- */
+.employee-welcome { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.employee-welcome-profile { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.employee-welcome-profile > div { min-width: 0; }
+.employee-welcome-profile h2 { font-size: 22px; }
+.employee-welcome-profile p { margin-top: 4px; color: var(--text-2); }
+.employee-team-label { display: inline-flex; margin-top: 5px; padding: 2px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--text-2); font-size: 12px; }
+.employee-welcome > .btn { flex: none; }
+.grid-kpi.employee-kpi-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: stretch; gap: 16px; }
+.grid-kpi.employee-kpi-grid > .kpi { min-width: 0; min-height: 150px; }
+.grid-kpi.employee-kpi-grid .kpi-value { font-size: 32px; }
+.employee-dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 20px; }
+.employee-dashboard-grid > .card { min-width: 0; }
+.employee-summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.employee-summary-grid > div { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; min-width: 0; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.employee-summary-grid small { color: var(--text-3); line-height: 1.35; }
+.employee-summary-grid strong { font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
+.employee-summary-grid span { color: var(--text-2); font-size: 12px; }
+.employee-inline-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.employee-inline-links .btn { min-width: 124px; }
+.employee-calendar-card { min-width: 0; }
+.employee-calendar-shell { min-width: 0; }
+.employee-calendar-card .calendar-month-toolbar h3 { text-transform: none; }
+.employee-calendar-header { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.employee-calendar-grid { grid-auto-rows: minmax(128px, auto); align-items: stretch; }
+.employee-calendar-cell { min-width: 0; min-height: 128px; padding: 8px; }
+.employee-calendar-events { gap: 6px; margin-top: 8px; }
+.employee-calendar-legend { display: flex; align-items: center; justify-content: center; gap: 18px; min-width: 700px; flex-wrap: wrap; padding: 2px 0 4px; }
+.employee-calendar-legend span { display: inline-flex; align-items: center; gap: 7px; color: var(--text-2); font-size: 12px; }
+.employee-calendar-legend i { width: 9px; height: 9px; flex: none; border-radius: 3px; background: var(--tone); }
+.employee-calendar-legend i.task { --tone: var(--accent); }
+.employee-calendar-legend i.meeting { --tone: var(--info); }
+.employee-calendar-legend i.leave { --tone: var(--warn); }
+.employee-calendar-event { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 7px 8px; border: 1px solid color-mix(in srgb, var(--tone) 30%, transparent); border-left: 3px solid var(--tone); border-radius: 8px; background: color-mix(in srgb, var(--tone) 10%, var(--surface)); color: var(--text); overflow-wrap: anywhere; }
+.employee-calendar-event.task { --tone: var(--accent); }
+.employee-calendar-event.meeting { --tone: var(--info); }
+.employee-calendar-event.leave { --tone: var(--warn); }
+.employee-calendar-event strong { font-size: 11.5px; line-height: 1.35; overflow-wrap: anywhere; }
+.employee-calendar-event small { color: var(--text-2); font-size: 10.5px; line-height: 1.35; overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  .employee-dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 1100px) {
+  .grid-kpi.employee-kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .employee-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .grid-kpi.employee-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  .employee-welcome { align-items: flex-start; }
+  .employee-welcome-profile { gap: 12px; }
+  .grid-kpi.employee-kpi-grid { gap: 12px; }
+  .grid-kpi.employee-kpi-grid > .kpi { min-height: 136px; padding: 16px; }
+  .grid-kpi.employee-kpi-grid .kpi-value { font-size: 28px; }
+  .employee-summary-grid { grid-template-columns: minmax(0, 1fr); }
+  .employee-inline-links .btn { flex: 1 1 130px; }
+}
+
+.kanban-grid { display: grid; grid-template-columns: repeat(5, minmax(200px, 1fr)); gap: 16px; }
+.kanban-column { display: flex; flex-direction: column; min-height: 300px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.kanban-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.kanban-head strong { font-size: 14px; }
+.kanban-head span { display: inline-grid; place-items: center; min-width: 24px; height: 24px; border-radius: 999px; background: var(--surface-3); color: var(--text-2); font-size: 12px; }
+.kanban-body { display: flex; flex-direction: column; gap: 12px; padding: 12px; }
+.task-card { display: flex; flex-direction: column; gap: 10px; padding: 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; }
+.task-card strong { font-size: 15px; }
+.task-card small { color: var(--text-2); }
+.task-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.task-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--text-2); font-size: 12px; }
+.small-select { height: 28px; padding: 0 8px; border-radius: 9px; background: var(--surface); border: 1px solid var(--line); color: var(--text); }
+.check-inline { display: inline-flex; align-items: center; gap: 10px; }
+.checkbox-group { display: flex; flex-wrap: wrap; gap: 10px 12px; }
+.chat-shell { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 18px; }
+.employee-chat-shell { min-width: 0; }
+.chat-list { display: flex; flex-direction: column; padding: 12px; }
+.chat-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 12px; border-radius: 12px; background: transparent; color: var(--text); text-align: left; }
+.chat-row.active { background: var(--accent-soft); }
+.chat-row-main { min-width: 0; }
+.chat-row-main strong { display: block; font-size: 14px; }
+.chat-row-main small { display: block; color: var(--text-2); }
+.chat-badge { display: inline-grid; place-items: center; min-width: 22px; height: 22px; border-radius: 999px; background: var(--danger); color: #fff; font-size: 11px; }
+.chat-panel { display: flex; flex-direction: column; min-height: 500px; }
+.chat-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.chat-header strong { display: block; }
+.chat-header small { color: var(--text-2); }
+.chat-body { display: flex; flex-direction: column; gap: 12px; padding: 18px; min-height: 320px; background: color-mix(in srgb, var(--surface-2) 80%, transparent); }
+.chat-bubble { display: flex; flex-direction: column; gap: 4px; max-width: 75%; padding: 12px 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); align-self: flex-start; }
+.chat-bubble.mine { align-self: flex-end; background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+.chat-bubble strong { font-size: 12px; color: var(--text-2); }
+.chat-bubble p { margin: 0; line-height: 1.5; }
+.chat-bubble small { color: var(--text-3); }
+.chat-composer { display: flex; gap: 10px; padding: 16px 18px; border-top: 1px solid var(--line); }
+.chat-composer .input { flex: 1; }
+@media (max-width: 760px) {
+  .employee-chat-shell { grid-template-columns: minmax(0, 1fr); }
+  .employee-chat-shell .chat-list { max-height: 220px; overflow-y: auto; }
+  .employee-chat-shell .chat-panel { min-width: 0; min-height: 380px; }
+}
 
 /* Modales ---------------------------------------------------------------- */
 dialog.modal { width: 100%; max-width: min(540px, calc(100vw - 28px)); max-height: calc(100dvh - 28px); padding: 0; border: 0; background: transparent; color: inherit; overflow: visible; }

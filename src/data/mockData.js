@@ -106,6 +106,65 @@ const activities = [
   ["trend-up","ok","Avancement à 82 %","Plateforme e-learning",1300],
 ].map(([icon,tone,text,meta,ago])=>({icon,tone,text,meta,ago}));
 
+const tasks = [
+  {id:"t1", title:"Préparer le briefing sprint", projectId:"p1", projectName:"Refonte du portail RH", assigneeId:"w1", assigneeName:"Yasmine Kefi", teamId:"alpha", status:"En cours", priority:"Moyenne", dueDate:"2026-10-02", owner:"Amine Trabelsi"},
+  {id:"t2", title:"Valider l'intégration du back-office", projectId:"p1", projectName:"Refonte du portail RH", assigneeId:"w10", assigneeName:"Aymen Khelifi", teamId:"alpha", status:"À faire", priority:"Urgent", dueDate:"2026-10-01", owner:"Amine Trabelsi"},
+  {id:"t3", title:"Suivre le plan de recette", projectId:"p4", projectName:"ERP Comptabilité", assigneeId:"w11", assigneeName:"Lina Baccouche", teamId:"alpha", status:"En retard", priority:"Haute", dueDate:"2026-09-28", owner:"Amine Trabelsi"},
+  {id:"t4", title:"Rédiger le rapport d'avancement", projectId:"p7", projectName:"Tableau de bord IoT usine", assigneeId:"w16", assigneeName:"Anis Belaïd", teamId:"alpha", status:"En révision", priority:"Moyenne", dueDate:"2026-10-03", owner:"Amine Trabelsi"},
+  {id:"t5", title:"Mettre à jour les livrables clients", projectId:"p12", projectName:"Marketplace des artisans", assigneeId:"w2", assigneeName:"Oussama Ben Amor", teamId:"alpha", status:"À faire", priority:"Haute", dueDate:"2026-10-04", owner:"Amine Trabelsi"}
+];
+
+const leaveRequests = [
+  {id:"lv1", employeeId:"w1", employeeName:"Yasmine Kefi", type:"Congé annuel", start:"2026-10-04", end:"2026-10-08", duration:5, reason:"Vacances familiales", status:"En attente"},
+  {id:"lv2", employeeId:"w10", employeeName:"Aymen Khelifi", type:"Congé maladie", start:"2026-10-10", end:"2026-10-12", duration:3, reason:"Consultation médicale", status:"Validé"},
+  {id:"lv3", employeeId:"w11", employeeName:"Lina Baccouche", type:"Congé sans solde", start:"2026-10-15", end:"2026-10-18", duration:4, reason:"Déménagement", status:"En attente"},
+  {id:"lv4", employeeId:"w16", employeeName:"Anis Belaïd", type:"Congé personnel", start:"2026-10-19", end:"2026-10-20", duration:2, reason:"Raison personnelle", status:"Refusé"}
+];
+
+const reports = [
+  {id:"r1", employeeId:"w1", employeeName:"Yasmine Kefi", projectId:"p1", projectName:"Refonte du portail RH", date:"2026-09-30", tasks:["Mise à jour du backlog","Validation des écrans RH"], problems:["2 dépendances bloquées"], status:"À valider"},
+  {id:"r2", employeeId:"w10", employeeName:"Aymen Khelifi", projectId:"p4", projectName:"ERP Comptabilité", date:"2026-09-29", tasks:["Mise en place des workflows","Tests unitaires"], problems:["Couverture partielle"], status:"Validé"},
+  {id:"r3", employeeId:"w16", employeeName:"Anis Belaïd", projectId:"p7", projectName:"Tableau de bord IoT usine", date:"2026-09-28", tasks:["Livraison du lot 2","Validation sur maquette"], problems:["API non stable"], status:"À valider"},
+  {id:"r4", employeeId:"w11", employeeName:"Lina Baccouche", projectId:"p12", projectName:"Marketplace des artisans", date:"2026-09-27", tasks:["Suivi des livrables","Mise à jour planning"], problems:["Risque de retard client"], status:"Refusé"}
+];
+
+const attendance = [
+  {id:"a10", employeeName:"Yasmine Kefi", teamId:"alpha", date:"2026-10-01", time:"08:57", status:"Présent"},
+  {id:"a11", employeeName:"Oussama Ben Amor", teamId:"alpha", date:"2026-10-01", time:"09:13", status:"Retard"},
+  {id:"a12", employeeName:"Aymen Khelifi", teamId:"alpha", date:"2026-10-01", time:"09:02", status:"Présent"},
+  {id:"a13", employeeName:"Lina Baccouche", teamId:"alpha", date:"2026-10-01", time:"08:49", status:"Présent"},
+  {id:"a14", employeeName:"Anis Belaïd", teamId:"alpha", date:"2026-10-01", time:"Absent", status:"Absent"}
+];
+
+const meetings = [
+  {id:"m1", title:"Point équipe Alpha", date:"2026-10-02", time:"09:30", duration:45, participants:["Amine Trabelsi","Yasmine Kefi","Aymen Khelifi"], projectId:"p1", description:"Suivi sprint et blocages"},
+  {id:"m2", title:"Synthèse projet ERP", date:"2026-10-03", time:"14:00", duration:60, participants:["Amine Trabelsi","Lina Baccouche"], projectId:"p4", description:"Validation des livrables"},
+  {id:"m3", title:"Réunion de synthèse", date:"2026-10-04", time:"11:00", duration:30, participants:["Amine Trabelsi","Yasmine Kefi","Anis Belaïd"], projectId:"p7", description:"Suivi des points d'avancement"}
+];
+
+const messages = [
+  {
+    id:"conv1",
+    title:"Équipe Alpha",
+    preview:"Préparation du sprint suivant",
+    unread:2,
+    participants:["Amine Trabelsi","Yasmine Kefi","Aymen Khelifi","Lina Baccouche"],
+    messages:[
+      {id:"msg1", sender:"Yasmine Kefi", me:false, text:"J'ai finalisé les maquettes RH. Il reste un point de validation côté équipe.", time:"09:12"},
+      {id:"msg2", sender:"Amine Trabelsi", me:true, text:"Merci. On validera ce matin avant 11h.", time:"09:18"},
+      {id:"msg3", sender:"Aymen Khelifi", me:false, text:"Je mets à jour le backlog pour ce sprint."
+      , time:"09:24"}
+    ]
+  }
+];
+
+const notifications = [
+  {id:"n1", type:"Congé", level:"warning", title:"Nouvelle demande de congé", message:"Aymen Khelifi a soumis une demande de congé.", date:"2026-10-01", read:false},
+  {id:"n2", type:"Rapport", level:"info", title:"Rapport à valider", message:"Yasmine Kefi a soumis un compte rendu de sprint.", date:"2026-10-01", read:false},
+  {id:"n3", type:"Retard", level:"urgent", title:"Tâche en retard", message:"ERP Comptabilité dépasse son plan de recette.", date:"2026-09-30", read:true},
+  {id:"n4", type:"Réunion", level:"info", title:"Réunion planifiée", message:"Point équipe Alpha est programmé demain à 09:30.", date:"2026-09-30", read:true}
+];
+
 const stats = {
   months:["oct.","nov.","déc.","janv.","févr.","mars","avr.","mai","juin","juil.","août","sept."],
   total:[5,6,6,7,8,9,9,10,11,12,13,14],
@@ -123,7 +182,14 @@ function loadDb() {
     teams, clients, projects, activities, stats,
     chefs: saved?.chefs || chefs,
     employees: saved?.employees || workers,
-    alerts: alerts.map(a => ({...a, ...(saved?.alertState?.[a.id] || {})}))
+    alerts: alerts.map(a => ({...a, ...(saved?.alertState?.[a.id] || {})})),
+    tasks: saved?.tasks || tasks,
+    leaveRequests: saved?.leaveRequests || leaveRequests,
+    reports: saved?.reports || reports,
+    attendance: saved?.attendance || attendance,
+    meetings: saved?.meetings || meetings,
+    messages: saved?.messages || messages,
+    notifications: saved?.notifications || notifications
   };
 }
 
@@ -132,7 +198,16 @@ export const DB = loadDb();
 export function saveDb() {
   const alertState = Object.fromEntries(DB.alerts.map(a => [a.id,{read:a.read,archived:a.archived}]));
   localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    chefs: DB.chefs, employees: DB.employees, alertState
+    chefs: DB.chefs,
+    employees: DB.employees,
+    alertState,
+    tasks: DB.tasks,
+    leaveRequests: DB.leaveRequests,
+    reports: DB.reports,
+    attendance: DB.attendance,
+    meetings: DB.meetings,
+    messages: DB.messages,
+    notifications: DB.notifications
   }));
 }
 

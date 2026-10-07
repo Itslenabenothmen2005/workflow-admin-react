@@ -1,23 +1,47 @@
-import {useMemo,useState} from "react";
+import {useEffect,useMemo,useState} from "react";
 import {Icon} from "../components/Icon";
-import {DB,client,chef,team} from "../data/mockData";
-import {formatDate,riskClass,statusClass} from "../utils";
+import {getProjects} from "../services/workflowApi";
+import {formatDate,statusClass} from "../utils";
 
-export default function Projects(){
- const [q,setQ]=useState(""),[status,setStatus]=useState("Tous"),[teamId,setTeamId]=useState(""),[risk,setRisk]=useState("Tous");
- const list=useMemo(()=>DB.projects.filter(p=>
-  (!q||`${p.name} ${client(p.client)?.name||""}`.toLowerCase().includes(q.toLowerCase())) &&
-  (status==="Tous"||p.status===status)&&(teamId===""||p.team===teamId)&&(risk==="Tous"||p.risk===risk)
- ),[q,status,teamId,risk]);
- return <>
-  <div className="toolbar"><div className="stat-pills"><button className={`stat-pill ${status==="Tous"?"active":""}`} onClick={()=>setStatus("Tous")}>Tous ({DB.projects.length})</button>{["En cours","Terminé","En retard"].map(s=><button key={s} className={`stat-pill ${status===s?"active":""}`} onClick={()=>setStatus(s)}>{s} ({DB.projects.filter(p=>p.status===s).length})</button>)}</div>
-   <div className="filters"><div className="field"><div className="input-icon"><Icon name="search"/><input className="input search" value={q} onChange={e=>setQ(e.target.value)} placeholder="Rechercher..."/></div></div>
-    <select className="select" value={teamId} onChange={e=>setTeamId(e.target.value)}><option value="">Toutes les équipes</option>{DB.teams.map(t=><option key={t.id} value={t.id}>{t.name}</option>)}</select>
-    <select className="select" value={risk} onChange={e=>setRisk(e.target.value)}><option value="Tous">Tous les risques</option><option value="faible">Faible</option><option value="moyen">Moyen</option><option value="élevé">Élevé</option></select>
-   </div>
-  </div>
-  <div className="card card-body flush"><div className="table-wrap"><table className="table responsive"><thead><tr><th>Projet</th><th>Client</th><th>Chef</th><th>Équipe</th><th>Échéance</th><th>Statut</th><th>Risque</th><th>Progression</th></tr></thead><tbody>
-  {list.map(p=><tr key={p.id}><td className="cell-main"><strong>{p.name}</strong></td><td>{client(p.client)?.name}</td><td>{chef(p.chef)?.name}</td><td><span className="team-tag" style={{"--c":team(p.team).color}}>{team(p.team).name}</span></td><td>{formatDate(p.end)}</td><td><span className={statusClass(p.status)}>{p.status}</span></td><td><span className={riskClass(p.risk)}>{p.risk}</span></td><td><div className="prog-cell"><div className="progress"><i style={{"--v":`${p.progress}%`}}/></div><span>{p.progress}%</span></div></td></tr>)}
-  </tbody></table></div></div>
- </>
+export default function Projects() {
+  const [q,setQ]=useState("");
+  const [status,setStatus]=useState("Tous");
+  const [projects,setProjects]=useState([]);
+  const [loading,setLoading]=useState(true);
+  const [error,setError]=useState("");
+
+  useEffect(() => {
+    let active=true;
+    getProjects().then(result => active && setProjects(result)).catch(error => active && setError(error.message)).finally(() => active && setLoading(false));
+    return () => {active=false};
+  }, []);
+
+  const list=useMemo(()=>projects.filter(project=>(!q||`${project.name||""} ${project.clientName||project.client||""}`.toLowerCase().includes(q.toLowerCase()))&&(status==="Tous"||String(project.status||"").toLowerCase()===status.toLowerCase())),[q,status,projects]);
+
+  let rows;
+  if (loading) {
+    rows = <tr><td colSpan="8">Chargement des projets…</td></tr>;
+  } else if (error) {
+    rows = <tr><td colSpan="8">{error}</td></tr>;
+  } else if (!list.length) {
+    rows = <tr><td colSpan="8">Aucun projet trouvé.</td></tr>;
+  } else {
+    rows = list.map(project => (
+      <tr key={project.id}>
+        <td className="cell-main"><strong>{project.name || "Projet sans nom"}</strong></td>
+        <td>{project.clientName || project.client || "—"}</td>
+        <td>{project.chefName || project.chef || "—"}</td>
+        <td>{project.teamName || project.team || "—"}</td>
+        <td>{project.endDate ? formatDate(project.endDate) : "—"}</td>
+        <td><span className={statusClass(project.status)}>{project.status || "Inconnu"}</span></td>
+        <td><span className={project.risk === "élevé" ? "badge badge-danger" : project.risk === "moyen" ? "badge badge-warn" : "badge badge-ok"}>{project.risk || "—"}</span></td>
+        <td><div className="prog-cell"><div className="progress"><i style={{"--v":`${Number(project.progress || 0)}%`}}/></div><span>{project.progress || 0}%</span></div></td>
+      </tr>
+    ));
+  }
+
+  return <>
+    <div className="toolbar"><div className="stat-pills">{["Tous","En cours","Terminé","En retard"].map(item=><button key={item} className={`stat-pill ${status===item?"active":""}`} onClick={()=>setStatus(item)}>{item} ({item==="Tous"?projects.length:projects.filter(project=>String(project.status||"").toLowerCase().includes(item.toLowerCase())).length})</button>)}</div><div className="filters"><div className="field"><div className="input-icon"><Icon name="search"/><input className="input search" value={q} onChange={e=>setQ(e.target.value)} placeholder="Rechercher..."/></div></div></div></div>
+    <div className="card card-body flush"><div className="table-wrap"><table className="table responsive"><thead><tr><th>Projet</th><th>Client</th><th>Chef</th><th>Équipe</th><th>Échéance</th><th>Statut</th><th>Risque</th><th>Progression</th></tr></thead><tbody>{rows}</tbody></table></div></div>
+  </>;
 }
